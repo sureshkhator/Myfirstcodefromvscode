@@ -17,22 +17,25 @@ from prophet import Prophet
 from rbc_forecast import fetch_data, train_and_forecast, evaluate
 
 
-st.set_page_config(page_title="RBC Forecast", layout="wide")
+def main() -> None:
+    st.set_page_config(page_title="RBC Forecast", layout="wide")
 
-st.title("RBC (RY.TO) Forecast Dashboard")
+    st.title("RBC (RY.TO) Forecast Dashboard")
 
-with st.sidebar.form("controls"):
-    ticker = st.text_input("Ticker", value="RY.TO")
-    start = st.date_input("Start date", value=pd.to_datetime("2010-01-01"))
-    days = st.number_input("Forecast days", min_value=1, max_value=365, value=90)
-    run = st.form_submit_button("Run Forecast")
+    with st.sidebar.form("controls"):
+        ticker = st.text_input("Ticker", value="RY.TO")
+        start = st.date_input("Start date", value=pd.to_datetime("2010-01-01"))
+        days = st.number_input("Forecast days", min_value=1, max_value=365, value=90)
+        run = st.form_submit_button("Run Forecast")
 
-if run:
+    if not run:
+        return
+
     with st.spinner("Downloading data and fitting model..."):
         df = fetch_data(ticker=ticker, start=str(start))
         if df.empty:
             st.error("No data returned for ticker. Check symbol or connectivity.")
-            st.stop()
+            return
 
         model, forecast, train_df, test_df = train_and_forecast(df, forecast_days=days)
         metrics = evaluate(forecast, test_df)
@@ -187,3 +190,7 @@ if run:
 
         csv30 = next30.to_csv(index=False)
         st.download_button("Download next-30 CSV", data=csv30, file_name=f"next30_{ticker.replace('.', '_')}.csv", mime='text/csv')
+
+
+if __name__ == "__main__":
+    main()

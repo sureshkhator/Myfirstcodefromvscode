@@ -11,10 +11,10 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-2. Install requirements:
+2. Install requirements (from this repository root):
 
 ```bash
-pip install -r "/Users/tanujkhator/untitled folder/python_code/requirement.txt"
+pip install -r requirements.txt
 ```
 
 3. (Optional) If `cmdstanpy` is installed, you may need to install CmdStan once:
@@ -23,10 +23,20 @@ pip install -r "/Users/tanujkhator/untitled folder/python_code/requirement.txt"
 python -c "import cmdstanpy; cmdstanpy.install_cmdstan()"
 ```
 
-4. Run the forecast script:
+4. Run the forecast script (from repository root):
 
 ```bash
-python "/Users/tanujkhator/untitled folder/python_code/rbc_forecast.py" --ticker RY.TO --start 2010-01-01 --days 90
+python rbc_forecast.py --ticker RY.TO --start 2010-01-01 --days 90
+```
+
+5. Run the Streamlit apps:
+
+```bash
+# Forecast dashboard
+streamlit run streamlit_app.py
+
+# Periodic-table explorer (in the PERIODICTABLE folder)
+streamlit run PERIODICTABLE/periodictable_app.py
 ```
 
 Outputs
