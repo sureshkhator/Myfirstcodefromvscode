@@ -1,0 +1,12 @@
+# Requirements for RBC (RY.TO) forecasting script
+# Install with: pip install -r requirement.txt
+yfinance
+pandas
+prophet
+cmdstanpy
+matplotlib
+scikit-learn
+numpy
+streamlit
+plotly
+periodictable
